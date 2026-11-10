@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>제 19회 설월여자고등학교 현미경 디지털 사진전</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts (Noto Sans KR) -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            700: '#15803d',
+                            800: '#166534',
+                            900: '#14532d',
+                        },
+                        seolwol: {
+                            pink: '#ec4899',
+                            darkpink: '#be185d',
+                            purple: '#8b5cf6'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Noto Sans KR', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Glassmorphism & Custom Microscope Styles */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .micro-lens-overlay {
+            background: radial-gradient(circle, transparent 55%, rgba(15, 23, 42, 0.9) 100%);
+        }
+        .hero-gradient {
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #065f46 100%);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #10b981;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased selection:bg-emerald-500 selection:text-white">
+
+    <!-- Header Navigation -->
+    <header class="sticky top-0 z-40 w-full glass-panel border-b border-slate-200/80 shadow-sm transition-all duration-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Logo & Title -->
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+                <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-emerald-500 via-teal-500 to-indigo-500 flex items-center justify-center text-white shadow-md shadow-emerald-500/20">
+                    <i class="fa-solid fa-microscope text-xl"></i>
+                </div>
+                <div>
+                    <div class="flex items-center space-x-2">
+                        <span class="text-xs font-bold tracking-wider uppercase px-2 py-0.5 bg-emerald-100 text-emerald-800 rounded-full">제 19회</span>
+                        <span class="text-xs text-slate-500 font-medium">설월여자고등학교</span>
+                    </div>
+                    <h1 class="text-lg font-bold text-slate-900 leading-tight">현미경 디지털 사진전</h1>
+                </div>
+            </div>
+
+            <!-- Desktop Navigation -->
+            <nav class="hidden md:flex items-center space-x-8">
+                <a href="#about" class="text-sm font-semibold text-slate-600 hover:text-emerald-600 transition-colors">전시 소개</a>
+                <a href="#gallery" class="text-sm font-semibold text-slate-600 hover:text-emerald-600 transition-colors">출품작 갤러리 (4)</a>
+                <a href="#evaluation" class="text-sm font-semibold text-slate-600 hover:text-emerald-600 transition-colors">심사 기준</a>
+                <a href="#notice" class="text-sm font-semibold text-slate-600 hover:text-emerald-600 transition-colors">공지사항</a>
+            </nav>
+
+            <!-- Action Button -->
+            <div class="hidden sm:flex items-center space-x-3">
+                <button onclick="scrollToSection('gallery')" class="px-4 py-2 text-sm font-bold text-white bg-emerald-600 hover:bg-emerald-700 rounded-xl shadow-lg shadow-emerald-600/30 transition-all hover:scale-105 active:scale-95">
+                    <i class="fa-solid fa-square-poll-vertical mr-1.5"></i> 우수작 투표하기
+                </button>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button id="mobileMenuBtn" class="md:hidden p-2 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+                <i class="fa-solid fa-bars text-xl"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobileMenu" class="hidden md:hidden bg-white border-b border-slate-200 px-4 pt-2 pb-4 space-y-2 shadow-lg">
+            <a href="#about" onclick="closeMobileMenu()" class="block px-3 py-2 rounded-md text-base font-medium text-slate-700 hover:bg-emerald-50 hover:text-emerald-600">전시 소개</a>
+            <a href="#gallery" onclick="closeMobileMenu()" class="block px-3 py-2 rounded-md text-base font-medium text-slate-700 hover:bg-emerald-50 hover:text-emerald-600">출품작 갤러리 (4개)</a>
+            <a href="#evaluation" onclick="closeMobileMenu()" class="block px-3 py-2 rounded-md text-base font-medium text-slate-700 hover:bg-emerald-50 hover:text-emerald-600">심사 기준</a>
+            <a href="#notice" onclick="closeMobileMenu()" class="block px-3 py-2 rounded-md text-base font-medium text-slate-700 hover:bg-emerald-50 hover:text-emerald-600">공지사항</a>
+        </div>
+    </header>
+
+    <!-- Hero Banner Section -->
+    <section class="relative overflow-hidden hero-gradient text-white py-20 lg:py-28">
+        <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#34d399_1px,transparent_1px)] [background-size:24px_24px]"></div>
+        <div class="absolute -right-20 -bottom-20 w-96 h-96 bg-emerald-500/20 rounded-full blur-3xl"></div>
+        <div class="absolute -left-20 -top-20 w-96 h-96 bg-indigo-500/20 rounded-full blur-3xl"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                    <div class="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-emerald-500/20 border border-emerald-400/30 backdrop-blur-md">
+                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                        <span class="text-xs font-semibold text-emerald-200 tracking-wide">2026 설월여자고등학교 자연과학부</span>
+                    </div>
+                    <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight">
+                        렌즈 너머 피어난 수수께끼,<br>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 via-teal-200 to-cyan-300">
+                            미시 세계의 아름다움을 탐구하다
+                        </span>
+                    </h1>
+                    <p class="text-slate-300 text-base sm:text-lg max-w-2xl leading-relaxed mx-auto lg:mx-0 font-light">
+                        설월여자고등학교 학생들의 독창적인 관찰 시각과 과학적 호기심으로 완성한 
+                        제 19회 현미경 디지털 사진전입니다. 4가지 미시 세계 탐구 이야기를 만나보세요.
+                    </p>
+                    <div class="pt-4 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+                        <button onclick="scrollToSection('gallery')" class="w-full sm:w-auto px-8 py-3.5 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-bold rounded-xl shadow-xl shadow-emerald-500/20 transition-all hover:-translate-y-0.5">
+                            대표 출품작 4선 관람 <i class="fa-solid fa-arrow-right ml-2"></i>
+                        </button>
+                        <a href="#about" class="w-full sm:w-auto px-6 py-3.5 bg-white/10 hover:bg-white/20 text-white font-semibold rounded-xl backdrop-blur-md border border-white/10 transition-all text-center">
+                            대회 개요 보기
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Interactive Lens Visual Component -->
+                <div class="lg:col-span-5">
+                    <div class="relative mx-auto max-w-md lg:max-w-none rounded-3xl p-6 bg-slate-900/70 border border-slate-700/60 shadow-2xl backdrop-blur-xl">
+                        <div class="flex items-center justify-between pb-4 border-b border-slate-800">
+                            <div class="flex space-x-2">
+                                <div class="w-3 h-3 rounded-full bg-rose-500"></div>
+                                <div class="w-3 h-3 rounded-full bg-amber-500"></div>
+                                <div class="w-3 h-3 rounded-full bg-emerald-500"></div>
+                            </div>
+                            <span class="text-xs text-slate-400 font-mono"><i class="fa-solid fa-microscope text-emerald-400 mr-1"></i> SEOLWOL_MICROSCOPE_V19</span>
+                        </div>
+                        <div class="mt-4 relative rounded-2xl overflow-hidden group aspect-square bg-slate-950 flex items-center justify-center border border-emerald-500/30">
+                            <img src="https://images.unsplash.com/photo-1576086213369-97a306d36557?auto=format&fit=crop&w=800&q=80" alt="Microscope preview" class="w-full h-full object-cover opacity-85 group-hover:scale-105 transition-transform duration-700">
+                            <div class="absolute inset-0 micro-lens-overlay pointer-events-none"></div>
+                            <div class="absolute inset-0 flex flex-col justify-between p-4 pointer-events-none">
+                                <div class="flex justify-between items-start">
+                                    <span class="text-[10px] font-mono text-emerald-400 bg-slate-900/80 px-2 py-1 rounded border border-emerald-500/40">MAG: 400X</span>
+                                    <span class="text-[10px] font-mono text-slate-300 bg-slate-900/80 px-2 py-1 rounded">RESOLUTION: HD</span>
+                                </div>
+                                <div class="text-center">
+                                    <p class="text-xs font-bold text-white tracking-widest uppercase bg-slate-900/90 py-1.5 px-3 rounded-lg border border-slate-700 inline-block shadow-lg">
+                                        ✨ 학생 작품 온라인 투표 진행 중
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contest Overview Bar -->
+    <section id="about" class="py-12 bg-white border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 text-center">
+                <div class="p-5 rounded-2xl bg-slate-50 border border-slate-100 hover:border-emerald-300 transition-all">
+                    <div class="w-10 h-10 mx-auto mb-3 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center">
+                        <i class="fa-solid fa-calendar-check"></i>
+                    </div>
+                    <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider">전시 및 투표 기간</h3>
+                    <p class="text-sm font-bold text-slate-800 mt-1">2026.05.10 ~ 05.28</p>
+                </div>
+                <div class="p-5 rounded-2xl bg-slate-50 border border-slate-100 hover:border-emerald-300 transition-all">
+                    <div class="w-10 h-10 mx-auto mb-3 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center">
+                        <i class="fa-solid fa-school"></i>
+                    </div>
+                    <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider">참가 대상</h3>
+                    <p class="text-sm font-bold text-slate-800 mt-1">설월여자고등학교 재학생 전체</p>
+                </div>
+                <div class="p-5 rounded-2xl bg-slate-50 border border-slate-100 hover:border-emerald-300 transition-all">
+                    <div class="w-10 h-10 mx-auto mb-3 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center">
+                        <i class="fa-solid fa-award"></i>
+                    </div>
+                    <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider">시상 구분</h3>
+                    <p class="text-sm font-bold text-slate-800 mt-1">최우수상(1명), 우수상(2명), 인기상</p>
+                </div>
+                <div class="p-5 rounded-2xl bg-slate-50 border border-slate-100 hover:border-emerald-300 transition-all">
+                    <div class="w-10 h-10 mx-auto mb-3 rounded-xl bg-rose-100 text-rose-700 flex items-center justify-center">
+                        <i class="fa-solid fa-cubes"></i>
+                    </div>
+                    <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider">등록 게시글</h3>
+                    <p class="text-sm font-bold text-slate-800 mt-1">대표 탐구 출품작 4개</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Section: Posts Gallery (4 Posts) -->
+    <section id="gallery" class="py-16 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
+                <div>
+                    <div class="inline-flex items-center space-x-2 text-emerald-600 font-bold text-sm tracking-wide uppercase mb-2">
+                        <i class="fa-solid fa-microscope"></i>
+                        <span>EXHIBITION GALLERY</span>
+                    </div>
+                    <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">제 19회 출품작 탐구 보고서</h2>
+                    <p class="text-slate-600 mt-2">설월여고 학생들의 렌즈로 관찰한 미시 세계 탐구 게시글 4편입니다.</p>
+                </div>
+                <!-- Filter Buttons -->
+                <div class="mt-6 md:mt-0 flex flex-wrap gap-2">
+                    <button onclick="filterCategory('all')" class="filter-btn active px-4 py-2 rounded-xl text-xs font-bold bg-emerald-600 text-white shadow-sm transition-all">전체보기 (4)</button>
+                    <button onclick="filterCategory('botany')" class="filter-btn px-4 py-2 rounded-xl text-xs font-bold bg-white text-slate-600 hover:bg-slate-100 border border-slate-200 transition-all">식물/세포</button>
+                    <button onclick="filterCategory('microbiology')" class="filter-btn px-4 py-2 rounded-xl text-xs font-bold bg-white text-slate-600 hover:bg-slate-100 border border-slate-200 transition-all">미생물/결정</button>
+                </div>
+            </div>
+
+            <!-- Grid Container for 4 Posts -->
+            <div id="postsGrid" class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Javascript will inject posts cards here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Evaluation Criteria Section -->
+    <section id="evaluation" class="py-16 bg-white border-t border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <h2 class="text-3xl font-extrabold text-slate-900">심사 및 평가 기준</h2>
+                <p class="text-slate-600 mt-2">과학적 타당성과 미학적 표현력, 탐구 소감을 종합하여 엄격히 평가합니다.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="p-6 bg-slate-50 rounded-2xl border border-slate-200/80 hover:shadow-md transition-shadow">
+                    <div class="w-12 h-12 rounded-xl bg-emerald-500 text-white flex items-center justify-center font-bold text-xl mb-4">
+                        40%
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">관찰 정확성 & 과학성</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        프레파라트 시편 제작의 완성도, 초점과 배율 선택의 적절성, 구조적 특징 분석의 논리성을 심사합니다.
+                    </p>
+                </div>
+                <div class="p-6 bg-slate-50 rounded-2xl border border-slate-200/80 hover:shadow-md transition-shadow">
+                    <div class="w-12 h-12 rounded-xl bg-teal-500 text-white flex items-center justify-center font-bold text-xl mb-4">
+                        30%
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">예술성 & 독창성</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        미시 구도의 색감 및 조형미, 기존의 관찰 틀을 벗어난 기발한 시각과 미학적 표현력을 심사합니다.
+                    </p>
+                </div>
+                <div class="p-6 bg-slate-50 rounded-2xl border border-slate-200/80 hover:shadow-md transition-shadow">
+                    <div class="w-12 h-12 rounded-xl bg-indigo-500 text-white flex items-center justify-center font-bold text-xl mb-4">
+                        30%
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">탐구 보고서 완성도</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        관찰 동기, 실험 과정의 체계적 서술, 결과 분석 및 과학적 고찰의 깊이를 종합 심사합니다.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Notice Section -->
+    <section id="notice" class="py-16 bg-slate-900 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                <div class="lg:col-span-5 space-y-4">
+                    <span class="text-xs font-bold uppercase tracking-wider text-emerald-400 bg-emerald-950/80 px-3 py-1 rounded-full border border-emerald-800">NOTICE & ANNOUNCEMENTS</span>
+                    <h2 class="text-3xl font-extrabold tracking-tight">대회 공지사항 및 안내</h2>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        설월여자고등학교 과학교구실 안내 및 현미경 디지털 사진전 관련 소식입니다.
+                    </p>
+                </div>
+                <div class="lg:col-span-7 bg-slate-800/80 rounded-2xl p-6 border border-slate-700/80 divide-y divide-slate-700/60">
+                    <div class="py-3 flex items-center justify-between">
+                        <div class="flex items-center space-x-3">
+                            <span class="px-2.5 py-0.5 rounded text-xs font-semibold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">공지</span>
+                            <a href="javascript:void(0)" class="text-sm font-medium hover:text-emerald-400 transition-colors">제 19회 현미경 디지털 사진전 온라인 투표 오픈</a>
+                        </div>
+                        <span class="text-xs text-slate-400 font-mono">2026.05.15</span>
+                    </div>
+                    <div class="py-3 flex items-center justify-between">
+                        <div class="flex items-center space-x-3">
+                            <span class="px-2.5 py-0.5 rounded text-xs font-semibold bg-blue-500/20 text-blue-400 border border-blue-500/30">안내</span>
+                            <a href="javascript:void(0)" class="text-sm font-medium hover:text-emerald-400 transition-colors">과학실 광학현미경 및 프레파라트 대여 일정 안내</a>
+                        </div>
+                        <span class="text-xs text-slate-400 font-mono">2026.05.10</span>
+                    </div>
+                    <div class="py-3 flex items-center justify-between">
+                        <div class="flex items-center space-x-3">
+                            <span class="px-2.5 py-0.5 rounded text-xs font-semibold bg-slate-700 text-slate-300">일정</span>
+                            <a href="javascript:void(0)" class="text-sm font-medium hover:text-emerald-400 transition-colors">현장 심사위원 탐구 발표 및 수상작 발표 (5/29)</a>
+                        </div>
+                        <span class="text-xs text-slate-400 font-mono">2026.05.08</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-950 text-slate-500 py-10 border-t border-slate-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
+            <div class="flex justify-center items-center space-x-2">
+                <div class="w-7 h-7 rounded-lg bg-emerald-600 flex items-center justify-center text-white text-xs font-bold">
+                    <i class="fa-solid fa-microscope"></i>
+                </div>
+                <span class="text-white font-bold text-sm tracking-wide">설월여자고등학교 과학교구실 / 자연과학부</span>
+            </div>
+            <p class="text-xs text-slate-500 max-w-md mx-auto">
+                광주광역시 남구 지산길 (설월여자고등학교) | 제 19회 현미경 디지털 사진전<br>
+                본 홈페이지의 게시글 내용 및 현미경 관찰 사진의 저작권은 출품 학생 및 설월여고에 있습니다.
+            </p>
+            <p class="text-xs text-slate-600 font-mono pt-2">© 2026 Seolwol Girls' High School Microscope Contest. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Interactive Post Modal -->
+    <div id="postModal" class="fixed inset-0 z-50 hidden overflow-y-auto bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-4xl w-full max-h-[90vh] overflow-hidden shadow-2xl flex flex-col my-auto border border-slate-200">
+            <!-- Modal Header -->
+            <div class="px-6 py-4 border-b border-slate-100 flex items-center justify-between bg-slate-50">
+                <div class="flex items-center space-x-3">
+                    <span id="modalCategory" class="px-3 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800"></span>
+                    <span id="modalMagnification" class="text-xs font-mono font-bold text-slate-500"></span>
+                </div>
+                <button onclick="closeModal()" class="w-8 h-8 rounded-full bg-slate-200 text-slate-600 hover:bg-rose-500 hover:text-white transition-colors flex items-center justify-center">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <!-- Modal Content Body -->
+            <div class="p-6 overflow-y-auto custom-scrollbar space-y-6">
+                <!-- Microscope Viewer Box -->
+                <div class="relative group rounded-2xl overflow-hidden bg-slate-950 aspect-video flex items-center justify-center shadow-inner">
+                    <img id="modalImage" src="" alt="" class="w-full h-full object-contain transition-transform duration-500">
+                    <div class="absolute bottom-4 left-4 right-4 bg-slate-900/80 backdrop-blur-md p-3 rounded-xl border border-white/10 text-white flex justify-between items-center text-xs">
+                        <span id="modalImageCaption" class="font-medium text-slate-200"></span>
+                        <span class="text-emerald-400 font-mono"><i class="fa-solid fa-circle-info mr-1"></i> 현미경 직촬영</span>
+                    </div>
+                </div>
+
+                <!-- Title & Author -->
+                <div>
+                    <h2 id="modalTitle" class="text-2xl font-extrabold text-slate-900 leading-tight"></h2>
+                    <div class="mt-2 flex items-center space-x-4 text-xs text-slate-500 font-medium border-b border-slate-100 pb-4">
+                        <span><i class="fa-regular fa-user mr-1 text-emerald-600"></i> <strong id="modalAuthor" class="text-slate-800"></strong></span>
+                        <span><i class="fa-regular fa-calendar mr-1"></i> <span id="modalDate"></span></span>
+                        <span><i class="fa-regular fa-heart text-rose-500 mr-1"></i> <span id="modalLikes"></span> 추천</span>
+                    </div>
+                </div>
+
+                <!-- Science Narrative -->
+                <div class="space-y-4 text-slate-700 text-sm leading-relaxed">
+                    <div>
+                        <h4 class="font-bold text-slate-900 text-base mb-1 flex items-center">
+                            <i class="fa-solid fa-flask text-emerald-600 mr-2"></i> 탐구 동기 및 배경
+                        </h4>
+                        <p id="modalBackground" class="bg-slate-50 p-3.5 rounded-xl border border-slate-100 text-slate-600"></p>
+                    </div>
+
+                    <div>
+                        <h4 class="font-bold text-slate-900 text-base mb-1 flex items-center">
+                            <i class="fa-solid fa-eye text-emerald-600 mr-2"></i> 관찰 내용 및 분석
+                        </h4>
+                        <p id="modalObservation" class="whitespace-pre-line"></p>
+                    </div>
+
+                    <div>
+                        <h4 class="font-bold text-slate-900 text-base mb-1 flex items-center">
+                            <i class="fa-solid fa-lightbulb text-emerald-600 mr-2"></i> 학생 소감 및 느낀 점
+                        </h4>
+                        <p id="modalImpression" class="italic text-slate-600 border-l-4 border-emerald-500 pl-3 py-1"></p>
+                    </div>
+                </div>
+
+                <!-- Comment Section -->
+                <div class="border-t border-slate-200 pt-6">
+                    <h4 class="font-bold text-slate-900 text-base mb-4 flex items-center justify-between">
+                        <span><i class="fa-regular fa-comments text-emerald-600 mr-2"></i> 학생 응원 댓글</span>
+                        <span id="commentCount" class="text-xs font-normal text-slate-500"></span>
+                    </h4>
+
+                    <div class="flex gap-2 mb-6">
+                        <input type="text" id="commentAuthorInput" placeholder="이름(학년/반)" class="w-1/3 px-3 py-2 text-xs border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                        <input type="text" id="commentTextInput" placeholder="작품 감상평 및 응원 메시지를 작성하세요!" class="w-full px-3 py-2 text-xs border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                        <button onclick="addComment()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl shrink-0 transition-colors">
+                            등록
+                        </button>
+                    </div>
+
+                    <div id="modalCommentsList" class="space-y-3">
+                        <!-- Dynamic Comments -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="px-6 py-4 bg-slate-50 border-t border-slate-100 flex items-center justify-between">
+                <button id="modalLikeBtn" onclick="toggleModalLike()" class="px-5 py-2.5 rounded-xl border border-rose-200 bg-rose-50 hover:bg-rose-100 text-rose-600 font-bold text-xs flex items-center space-x-2 transition-colors">
+                    <i class="fa-solid fa-heart text-sm"></i>
+                    <span>이 작품 추천하기 (<span id="modalLikeCountText">0</span>)</span>
+                </button>
+                <button onclick="closeModal()" class="px-5 py-2.5 bg-slate-800 hover:bg-slate-900 text-white font-bold text-xs rounded-xl transition-colors">
+                    닫기
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 bg-slate-900 text-white text-xs font-bold px-4 py-3 rounded-xl shadow-2xl flex items-center space-x-2 border border-slate-700">
+        <i class="fa-solid fa-circle-check text-emerald-400 text-base"></i>
+        <span id="toastMsg">추천되었습니다!</span>
+    </div>
+
+    <!-- Data & Interactivity JavaScript -->
+    <script>
+        // 4 Key Posts Data for the 19th Contest
+        const postsData = [
+            {
+                id: 1,
+                title: "양파 표피세포의 삼투 현상과 원형질 분리",
+                author: "2학년 3반 김서연",
+                category: "botany",
+                categoryLabel: "식물/세포",
+                magnification: "400X",
+                date: "2026.05.14",
+                likes: 42,
+                userLiked: false,
+                thumbnail: "https://images.unsplash.com/photo-1530026405186-ed1f139313f8?auto=format&fit=crop&w=800&q=80",
+                caption: "고농도 소금물 투입 후 식물세포의 원형질 분리 관찰",
+                background: "생명과학 수업 시간 배운 세포막을 통한 물질 이동(삼투 현상)을 직접 검증하고자, 양파 표피 세포에 10% NaCl 수용액을 투입하여 일어나는 원형질 분리 현상을 관찰했습니다.",
+                observation: "1. 400배율 관찰 시 뚜렷한 육각형 모양의 세포벽 확인.\n2. 고장액 처리 후 3분이 지나자 세포질 내 수분이 빠져나가며 세포막이 세포벽으로부터 떨어지는 원형질 분리(Plasmolysis) 포착.\n3. 아세트산카민 용액 염색으로 붉은 핵이 매우 선명하게 나타남.",
+                impression: "교과서 속 이론을 직접 프레파라트로 만들고 렌즈로 관찰하며 세포벽과 막의 기하학적 형태 변화를 직관적으로 깨닫는 소중한 기회였습니다.",
+                comments: [
+                    { name: "생물교사 박선생님", text: "염색약 농도와 초점이 아주 훌륭하게 맞았네요! 원형질 분리가 선명합니다.", date: "05-14 16:30" },
+                    { name: "2학년 이지은", text: "핵이 이렇게 뚜렷하게 보이다니 신기해요!" }
+                ]
+            },
+            {
+                id: 2,
+                title: "장미 꽃잎 표면의 미세 기공(Stomata) 구조",
+                author: "1학년 5반 박민지",
+                category: "botany",
+                categoryLabel: "식물/세포",
+                magnification: "200X",
+                date: "2026.05.15",
+                likes: 38,
+                userLiked: false,
+                thumbnail: "https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?auto=format&fit=crop&w=800&q=80",
+                caption: "교정 장미 꽃잎 뒷면의 기공과 공변세포 구조",
+                background: "학교 교정에 피어난 장미 꽃잎 뒷면을 매니큐어 투명 박리법을 이용해 표피 프레파라트로 제작한 후, 식물의 호흡과 증산작용을 담당하는 기공 구조를 정밀 촬영했습니다.",
+                observation: "1. 두 개의 반달 모양 공변세포(Guard cell)가 맞닿아 만들어진 기공 형태 관찰.\n2. 공변세포 내부 점상 패턴으로 분포한 엽록체 확인.\n3. 200배율 관찰 시 꽃잎 표면 고유의 세밀한 엠보싱 주름 문양이 아름다운 예술적 구도로 측정됨.",
+                impression: "아름다운 꽃잎 표면에 수많은 작은 숨구멍들이 살아있는 기계처럼 유기적으로 작동한다는 점이 무척 흥미로웠습니다.",
+                comments: [
+                    { name: "1학년 최수아", text: "꽃잎 패턴이 마치 예술작품 같아요! 추천합니다!" }
+                ]
+            },
+            {
+                id: 3,
+                title: "연못물 속 짚신벌레(Paramecium)의 섬모 운동",
+                author: "3학년 1반 이유진",
+                category: "microbiology",
+                categoryLabel: "미생물/결정",
+                magnification: "100X ~ 400X",
+                date: "2026.05.16",
+                likes: 56,
+                userLiked: false,
+                thumbnail: "https://images.unsplash.com/photo-1576086213369-97a306d36557?auto=format&fit=crop&w=800&q=80",
+                caption: "설월여고 생태연못에서 채취한 단세포 미생물 짚신벌레",
+                background: "학교 생태연못의 물을 채취한 후, 점성이 있는 아가로스 용액으로 단세포 생물의 이동 속도를 제어하며 섬모 운동과 수축포의 박동을 추적 관찰했습니다.",
+                observation: "1. 짚신 형태 몸통 둘레를 빼곡히 채운 섬모(Cilia)의 파동적 운동 관찰.\n2. 세포 삼투압을 조절하는 별 모양 수축포(Contractile vacuole)의 수축/팽창 반응 촬영.\n3. 세포입 방향으로 먹이를 삼키는 과정 포착.",
+                impression: "눈으로 볼 수 없는 미세한 물 한 방울 속에도 치열하게 생명활동을 이어나가는 미생물의 경이로운 세계가 존재함을 배웠습니다.",
+                comments: [
+                    { name: "3학년 윤아름", text: "움직이는 짚신벌레 초점 잡기 힘들었을 텐데 대단해요!", date: "05-16 18:05" }
+                ]
+            },
+            {
+                id: 4,
+                title: "비타민 C(아스코르브산) 재결정의 편광 기하학",
+                author: "2학년 1반 정다은",
+                category: "microbiology",
+                categoryLabel: "미생물/결정",
+                magnification: "100X",
+                date: "2026.05.17",
+                likes: 64,
+                userLiked: false,
+                thumbnail: "https://images.unsplash.com/photo-1507668077129-56e32842fceb?auto=format&fit=crop&w=800&q=80",
+                caption: "비타민 C 에탄올 용액 건조 후 생성된 편광 결정체 구조",
+                background: "비타민 C를 알코올 수용액에 녹여 슬라이드 글라스 위에서 급속 재결정시킨 후, 편광 필터 광학 세팅을 이용해 빛의 복굴절과 정교한 기하학적 격자를 관찰했습니다.",
+                observation: "1. 중심점에서 방사상으로 뻗어나가는 만화경 스타일의 만다라 문양 결정 관찰.\n2. 편광 필터 회전 시 각도에 따라 푸른색, 보라색, 금빛 간섭색(Interference color) 변화.\n3. 결정 성장 경계면의 나뭇가지 모양 수형도(Dendrite) 패턴 확인.",
+                impression: "화학 반응과 물리 광학 현상이 결합해 만들어낸 우아한 미학에 감탄했습니다. 과학이 선사하는 가장 아름다운 예술을 체험했습니다.",
+                comments: [
+                    { name: "화학교사 강선생님", text: "편광 현상을 훌륭하게 활용했네요! 빛의 굴절과 결정 성장 패턴이 매우 인상적입니다.", date: "05-17 11:20" }
+                ]
+            }
+        ];
+
+        let currentActivePostId = null;
+
+        // Render Posts Grid
+        function renderPosts(filter = 'all') {
+            const grid = document.getElementById('postsGrid');
+            grid.innerHTML = '';
+
+            const filtered = filter === 'all' 
+                ? postsData 
+                : postsData.filter(p => p.category === filter);
+
+            filtered.forEach(post => {
+                const card = document.createElement('div');
+                card.className = "bg-white rounded-3xl overflow-hidden border border-slate-200/80 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex flex-col group cursor-pointer";
+                card.onclick = () => openModal(post.id);
+
+                card.innerHTML = `
+                    <div class="relative aspect-video overflow-hidden bg-slate-950">
+                        <img src="${post.thumbnail}" alt="${post.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-90">
+                        <div class="absolute top-4 left-4">
+                            <span class="px-3 py-1 rounded-full text-xs font-bold bg-white/90 text-slate-800 backdrop-blur-md shadow-sm border border-white/50">
+                                ${post.categoryLabel}
+                            </span>
+                        </div>
+                        <div class="absolute top-4 right-4">
+                            <span class="px-2.5 py-1 rounded-lg text-xs font-mono font-bold bg-slate-900/80 text-emerald-400 border border-emerald-500/30">
+                                ${post.magnification}
+                            </span>
+                        </div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent opacity-60"></div>
+                        <div class="absolute bottom-3 left-4 right-4 text-xs text-slate-300 truncate font-mono">
+                            <i class="fa-solid fa-microscope text-emerald-400 mr-1"></i> ${post.caption}
+                        </div>
+                    </div>
+                    
+                    <div class="p-6 flex-1 flex flex-col justify-between space-y-4">
+                        <div>
+                            <div class="flex items-center justify-between text-xs text-slate-400 mb-2 font-medium">
+                                <span><i class="fa-regular fa-user mr-1"></i> ${post.author}</span>
+                                <span><i class="fa-regular fa-calendar mr-1"></i> ${post.date}</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 group-hover:text-emerald-600 transition-colors line-clamp-1">
+                                ${post.title}
+                            </h3>
+                            <p class="text-slate-600 text-xs mt-2 line-clamp-2 leading-relaxed">
+                                ${post.background}
+                            </p>
+                        </div>
+
+                        <div class="pt-4 border-t border-slate-100 flex items-center justify-between">
+                            <span class="text-xs font-bold text-emerald-600 group-hover:translate-x-1 transition-transform inline-flex items-center">
+                                상세 탐구보고서 읽기 <i class="fa-solid fa-chevron-right ml-1 text-[10px]"></i>
+                            </span>
+                            <button onclick="event.stopPropagation(); quickLike(${post.id})" class="flex items-center space-x-1.5 px-3 py-1.5 rounded-xl border ${post.userLiked ? 'bg-rose-50 border-rose-200 text-rose-600' : 'bg-slate-50 border-slate-200 text-slate-500'} hover:bg-rose-50 hover:text-rose-600 transition-colors text-xs font-bold">
+                                <i class="fa-solid fa-heart ${post.userLiked ? 'text-rose-500' : ''}"></i>
+                                <span>${post.likes}</span>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Category Filter
+        function filterCategory(cat) {
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('bg-emerald-600', 'text-white');
+                btn.classList.add('bg-white', 'text-slate-600');
+            });
+            event.target.classList.remove('bg-white', 'text-slate-600');
+            event.target.classList.add('bg-emerald-600', 'text-white');
+            renderPosts(cat);
+        }
+
+        // Quick Like Toggle
+        function quickLike(postId) {
+            const post = postsData.find(p => p.id === postId);
+            if (post) {
+                if (post.userLiked) {
+                    post.likes--;
+                    post.userLiked = false;
+                    showToast("추천을 취소하였습니다.");
+                } else {
+                    post.likes++;
+                    post.userLiked = true;
+                    showToast("👍 작품을 추천하셨습니다!");
+                }
+                renderPosts();
+                if (currentActivePostId === postId) {
+                    updateModalLikeUI(post);
+                }
+            }
+        }
+
+        // Modal Controls
+        function openModal(postId) {
+            const post = postsData.find(p => p.id === postId);
+            if (!post) return;
+            currentActivePostId = postId;
+
+            document.getElementById('modalCategory').innerText = post.categoryLabel;
+            document.getElementById('modalMagnification').innerText = "배율: " + post.magnification;
+            document.getElementById('modalImage').src = post.thumbnail;
+            document.getElementById('modalImageCaption').innerText = post.caption;
+            document.getElementById('modalTitle').innerText = post.title;
+            document.getElementById('modalAuthor').innerText = post.author;
+            document.getElementById('modalDate').innerText = post.date;
+            document.getElementById('modalLikes').innerText = post.likes;
+
+            document.getElementById('modalBackground').innerText = post.background;
+            document.getElementById('modalObservation').innerText = post.observation;
+            document.getElementById('modalImpression').innerText = `"${post.impression}"`;
+
+            updateModalLikeUI(post);
+            renderModalComments(post);
+
+            document.getElementById('postModal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('postModal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+            currentActivePostId = null;
+        }
+
+        function updateModalLikeUI(post) {
+            document.getElementById('modalLikeCountText').innerText = post.likes;
+            document.getElementById('modalLikes').innerText = post.likes;
+            const btn = document.getElementById('modalLikeBtn');
+            if (post.userLiked) {
+                btn.classList.remove('bg-rose-50', 'text-rose-600', 'border-rose-200');
+                btn.classList.add('bg-rose-600', 'text-white', 'border-rose-600');
+            } else {
+                btn.classList.remove('bg-rose-600', 'text-white', 'border-rose-600');
+                btn.classList.add('bg-rose-50', 'text-rose-600', 'border-rose-200');
+            }
+        }
+
+        function toggleModalLike() {
+            if (currentActivePostId) {
+                quickLike(currentActivePostId);
+            }
+        }
+
+        function renderModalComments(post) {
+            const list = document.getElementById('modalCommentsList');
+            document.getElementById('commentCount').innerText = `총 ${post.comments.length}개`;
+            list.innerHTML = '';
+
+            if (post.comments.length === 0) {
+                list.innerHTML = `<p class="text-xs text-slate-400 py-2">첫 응원 댓글을 작성해 보세요!</p>`;
+                return;
+            }
+
+            post.comments.forEach(c => {
+                const div = document.createElement('div');
+                div.className = "p-3 bg-slate-50 rounded-xl border border-slate-100 text-xs";
+                div.innerHTML = `
+                    <div class="flex items-center justify-between font-bold text-slate-800 mb-1">
+                        <span><i class="fa-solid fa-comment-dots text-emerald-500 mr-1.5"></i> ${c.name}</span>
+                        <span class="text-[10px] text-slate-400 font-normal">${c.date || '방금 전'}</span>
+                    </div>
+                    <p class="text-slate-600">${c.text}</p>
+                `;
+                list.appendChild(div);
+            });
+        }
+
+        function addComment() {
+            const authorInput = document.getElementById('commentAuthorInput');
+            const textInput = document.getElementById('commentTextInput');
+
+            if (!authorInput.value.trim() || !textInput.value.trim()) {
+                showToast("작성자와 댓글 내용을 입력해주세요.");
+                return;
+            }
+
+            const post = postsData.find(p => p.id === currentActivePostId);
+            if (post) {
+                const now = new Date();
+                const timeStr = `${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
+                
+                post.comments.push({
+                    name: authorInput.value.trim(),
+                    text: textInput.value.trim(),
+                    date: timeStr
+                });
+
+                renderModalComments(post);
+                textInput.value = '';
+                showToast("댓글이 등록되었습니다!");
+            }
+        }
+
+        // Toast Helper
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMsg').innerText = msg;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+
+            setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 2500);
+        }
+
+        // Smooth Scroll Helper
+        function scrollToSection(id) {
+            const elem = document.getElementById(id);
+            if (elem) {
+                elem.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        // Mobile Menu Toggles
+        const mobileBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        mobileBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        function closeMobileMenu() {
+            mobileMenu.classList.add('hidden');
+        }
+
+        // Initialize Page
+        window.addEventListener('DOMContentLoaded', () => {
+            renderPosts();
+        });
+    </script>
+</body>
+</html>
